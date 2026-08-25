@@ -1,0 +1,33 @@
+name: Run Agent Testing 
+
+#trigger workflow everytime push code to GitHub
+on: [push, pull_request]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest  #boot a linux server in the cloud
+
+  steps:
+  # download repo code into cloud
+  - name: check repo code
+    uses: actions/checkout@v4
+
+  # set up python in cloud environment
+  - name: Python Env
+    uses: actions/setup-python@v5
+    with:
+      python-version: '3.11'
+
+  #install s/w libraries needed
+  - name: Install system dependencies
+    run: |
+      python -m pip install --upgrade pip
+      pip install huggingface_hub opik python_dotenv pytest
+
+  # run automate test gate
+  - name: Execute pytest Suite
+    env:
+      HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      OPIK_API_KEY: ${{ secrets.OPIK_API_KEY }}
+    run: |
+        pytest

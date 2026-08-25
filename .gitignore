@@ -1,0 +1,10 @@
+# Private environment variables (API keys)
+.env
+
+# Python virtual environment cache files
+.venv/
+__pycache__/
+*.pyc
+
+# Code editor configurations
+.vscode/

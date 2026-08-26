@@ -21,7 +21,7 @@ def generate_ai_response(prompt: str, history: List[Dict[str,str]]) -> tuple[str
 
         history.append({"role": "user", "content": prompt}) #Append your brand new question to the ongoing transcript list
     
-    response = client.chat_completion(              #Sends the full transcript sequence to the model
+    response = client.chat.completions.create(              #Sends the full transcript sequence to the model
         model="meta-llama/Llama-3.1-8B-Instruct",
         messages=history,
         max_tokens=500

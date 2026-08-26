@@ -9,7 +9,7 @@ from openai import OpenAI # Standardize the connection using the OpenAI client l
 load_dotenv()
 # Initialize the Hugging Face client
 client = OpenAI(
-    base_url="https://huggingface.co", # fixed API gateway endpoint
+    base_url="https://router.huggingface.co/v1", # Swapped to the correct backend route
     api_key=os.environ.get("HF_TOKEN"))
 
 @track  # Automatically track this specific logic function in Opik

@@ -19,7 +19,7 @@ def generate_ai_response(prompt: str, history: List[Dict[str,str]]) -> tuple[str
         history.append({"role": "user", "content": prompt}) #Append your brand new question to the ongoing transcript list
     
     response = client.chat_completion(              #Sends the full transcript sequence to the model
-        model="Qwen/Qwen2.5-Coder-7B-Instruct",
+        model="mistralai/Mistral-7B-Instruct-v0.3",
         messages=history,
         max_tokens=500
     )

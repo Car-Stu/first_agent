@@ -1,13 +1,16 @@
 import os
 from typing import List, Dict, Tuple
 from dotenv import load_dotenv
-from huggingface_hub import InferenceClient
+#from huggingface_hub import InferenceClient
 from opik import track
+from openai import OpenAI # Standardize the connection using the OpenAI client layout
 
 # Load configuration values safely
 load_dotenv()
 # Initialize the Hugging Face client
-client = InferenceClient(token=os.environ.get("HF_TOKEN"))
+client = OpenAI(
+    base_url="https://huggingface.co", # fixed API gateway endpoint
+    api_key=os.environ.get("HF_TOKEN"))
 
 @track  # Automatically track this specific logic function in Opik
 def generate_ai_response(prompt: str, history: List[Dict[str,str]]) -> tuple[str, List[Dict[str,str]]]:

@@ -14,7 +14,7 @@ def main():
     # 3. Render all past messages in the browser window dynamically
     # We skip the system prompt at index 0 so it stays hidden from users
     for message in st.session_state.chat_history:
-        if message["role"] != "system":
+        if message["role"] != "system" and message.get("content"):
             with st.chat_message(message["role"]):
                 st.write(message["content"])
 
@@ -25,21 +25,24 @@ def main():
         with st.chat_message("user"):
             st.write(user_question)
 
+            #FRONTEND PERSISTENCE: Save the new question block to the state vault immediately
+        st.session_state.chat_history.append({"role": "user", "content": user_question}) 
+
         # Trigger a beautiful animated loading spinner while the AI thinks
         with st.spinner("Thinking..."):
             try:
-                # Pass the question and history tracking variables down the pipe
-                ai_answer, updated_history = generate_ai_response(
-                    user_question, 
-                    st.session_state.chat_history
-                )
+                 # 5. Execute our model call with our validated, persistent memory state array
+                ai_answer, _ = generate_ai_response(user_question, st.session_state.chat_history)
                 
-                # Save the new conversation state back to the web session memory
-                st.session_state.chat_history = updated_history
-                
-                # Display the AI's response text block cleanly
-                with st.chat_message("assistant"):
-                    st.write(ai_answer)
+                # 6. FRONTEND PERSISTENCE: Save ONLY the clean text reply block straight to the state vault
+                if ai_answer and ai_answer.strip():
+                    st.session_state.chat_history.append({"role": "assistant", "content": ai_answer})
+                    
+                    # Force render the text block on screen instantly
+                    with st.chat_message("assistant"):
+                        st.write(ai_answer)
+                else:
+                    st.error("System Warning: The server model returned an empty string block payload.")
                     
             except Exception as e:
                 st.error(f"An application error occurred: {e}")

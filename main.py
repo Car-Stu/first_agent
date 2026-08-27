@@ -36,11 +36,8 @@ def main():
                 
                 # 6. FRONTEND PERSISTENCE: Save ONLY the clean text reply block straight to the state vault
                 if ai_answer and ai_answer.strip():
-                    st.session_state.chat_history.append({"role": "assistant", "content": ai_answer})
-                    
-                    # Force render the text block on screen instantly
-                    with st.chat_message("assistant"):
-                        st.write(ai_answer)
+                    st.session_state.chat_history.append({"role": "assistant", "content": ai_answer})                    
+            
                 else:
                     st.error("System Warning: The server model returned an empty string block payload.")
                     

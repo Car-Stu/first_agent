@@ -27,5 +27,4 @@ def generate_ai_response(prompt: str, history: List[Dict[str, str]]) -> Tuple[st
         max_tokens=500,
     )
     ai_message = response.choices[0].message.content  
-    history.append({"role": "assistant", "content": ai_message})
     return ai_message, history

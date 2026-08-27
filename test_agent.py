@@ -15,4 +15,4 @@ def test_generate_ai_response_is_string():
     
     assert isinstance(result, str), "The AI response should be a text string."
     assert len(result) > 0, "The AI response should not be empty."
-    assert len(updated_history) > 0, "The chat history list should be populated."
+    assert updated_history == empty_history, "core.py should not mutate history."

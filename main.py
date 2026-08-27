@@ -20,29 +20,22 @@ def main():
 
     # 4. Create a native web typing input bar at the bottom
     if user_question := st.chat_input("Ask me anything"):
-        
-        # Display your newly typed question instantly on screen
+        st.session_state.chat_history.append({"role": "user", "content": user_question})
+
         with st.chat_message("user"):
             st.write(user_question)
 
-            #FRONTEND PERSISTENCE: Save the new question block to the state vault immediately
-        st.session_state.chat_history.append({"role": "user", "content": user_question}) 
-
-        # Trigger a beautiful animated loading spinner while the AI thinks
-        with st.spinner("Thinking..."):
-            try:
-                 # 5. Execute our model call with our validated, persistent memory state array
-                ai_answer, _ = generate_ai_response(user_question, st.session_state.chat_history)
-                
-                # 6. FRONTEND PERSISTENCE: Save ONLY the clean text reply block straight to the state vault
-                if ai_answer and ai_answer.strip():
-                    st.session_state.chat_history.append({"role": "assistant", "content": ai_answer})                    
-            
-                else:
-                    st.error("System Warning: The server model returned an empty string block payload.")
-                    
-            except Exception as e:
-                st.error(f"An application error occurred: {e}")
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                try:
+                    ai_answer, _ = generate_ai_response(user_question, st.session_state.chat_history)
+                    if ai_answer and ai_answer.strip():
+                        st.session_state.chat_history.append({"role": "assistant", "content": ai_answer})
+                        st.write(ai_answer)
+                    else:
+                        st.error("Empty response.")
+                except Exception as e:
+                    st.error(f"Error: {e}")
 
 if __name__ == "__main__":
     main()

@@ -11,7 +11,7 @@ client = OpenAI(
     api_key=os.environ.get("HF_TOKEN"),
 )
 
-MODEL = "Qwen/Qwen2.5-7B-Instruct"  # ungated, avoids license-wall failures
+MODEL = "deepseek-ai/DeepSeek-V3-0324"  # ungated, avoids license-wall failures
 
 @track
 def generate_ai_response(prompt: str, history: List[Dict[str, str]]) -> Tuple[str, List[Dict[str, str]]]:

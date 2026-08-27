@@ -7,18 +7,18 @@ def main():
     st.title("My local Assistant")
     st.write("A stateful AI agent deployed with full CI/CD and Opik tracing.")
     
-    # 2. Initialize Streamlit's web-safe persistent memory array
+    # Initialize Streamlit's web-safe persistent memory array
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []
 
-    # 3. Render all past messages in the browser window dynamically
+    # Render all past messages in the browser window dynamically
     # We skip the system prompt at index 0 so it stays hidden from users
     for message in st.session_state.chat_history:
         if message["role"] != "system" and message.get("content"):
             with st.chat_message(message["role"]):
                 st.write(message["content"])
 
-    # 4. Create a native web typing input bar at the bottom
+    # Create a native web typing input bar at the bottom
     if user_question := st.chat_input("Ask me anything"):
         st.session_state.chat_history.append({"role": "user", "content": user_question})
 

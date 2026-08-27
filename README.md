@@ -3,7 +3,7 @@
 A lightweight, production-grade AI agent infrastructure utilizing free, open-source models and automated telemetry tracking.
 
 ## Architecture & Infrastructure
-- **LLM Engine:** Serverless inference using `Qwen/Qwen2.5-Coder-7B-Instruct`
+- **LLM Engine:** Serverless inference using `deepseek-ai/DeepSeek-V3-0324`
 - **Observability (LLMops):** Automated trace logging and latency metrics via **Opik**
 - **Environment Management:** Strict type and secret sandboxing using `.env` validation
 
@@ -19,7 +19,7 @@ A lightweight, production-grade AI agent infrastructure utilizing free, open-sou
 2. Initialize and activate your Python environment:
    ```bash
    python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\Activate.ps1
+   source .venv\Scripts\Activate.ps1
    ```
 3. Install required software dependencies:
    ```bash
